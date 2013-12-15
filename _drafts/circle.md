@@ -1,0 +1,24 @@
+---
+layout: post
+title:  "More dev, less ops with Circle CI"
+date:   2013-12-12 09:54:06
+categories: circle ci continuous integration
+---
+
+Circle CI is a great alternative to maintaining your own build infrastructure.
+
+Continuous integration has been around for some time and is a standard accepted part of agile software development. When I first joined Sky, we had a Teamcity build server running a large build for our Java/Spring customer facing account management application. Initially we had one box under the desk running the build server and a couple of VMs that would build the project and run our Selenium test suite.
+
+Over time as the project got bigger, we added more VMs and boxes and then built a RabbitMQ based test distribution system so that each build agent would pick up a test off a queue and run it. We eventually grew to having about ten boxes running thirty VMs. This began to turn into a nightmare when for example, a power cut caused all the boxes to restart, or there was something wrong with one of the VMs and the build would fail unpredictably. The configuration was complicated, not version controlled and hard to explain to new starters.
+
+Fast forward a year and we were working on a Ruby/Sinatra project and building it in the same way. By this point we had spent a lot of time working with Puppet to automate the creation of the build agents so that if one went a bit wrong, we could just throw it away and provision a new one. Fortunately we didn't have quite the same scale problems, as the application was a lot smaller.
+
+Frankly I find maintaining a whole load of boxes under the desk rather dull and much prefer to focus on developing. We could be spending a day a week or more on maintenance, and this was getting increasingly hard to explain exactly what we were doing to our stakeholders.
+
+We then split the team as it was getting too big, and I took half the developers to a new part of the office. We wanted to completely separate our infrastructure and resources and set up our own build system. Problem was that there just weren't enough IP addresses or space in the building and there was a supply problem in getting new equipment due to the flood in Thailand.
+
+So we looked at outsourcing our build. Travis is a pretty awesome continuous integration service that is popular with the open source community. They automatically run a build when you check in your project in Github on their infrastructure. We had a go with Travis but at the time it was only available for open source projects and found it a bit fiddly to configure.
+
+Then I came across Circle CI, a continuous integration service that works a bit like Travis, but for private repositories as well. Running the first build was pretty simple, you just link it to your GitHub account, choose what projects you want to run and it just runs them. There's no configuration required if you follow the standard file locations for your projects. It just works it out by itself. If you want to customise the configuration you just include a simple circle.yml configurationfile in your project.
+
+An awesome feature is the automatic parallelisation of your tests. It just works it out for you. You can easily turn up the concurrency (and the cost), just like dynos on Heroku. The job is more rewarding and the stakeholders are happier as we are spending more time on delivering features rather than maintaining build agents.
