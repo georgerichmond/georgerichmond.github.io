@@ -1,9 +1,12 @@
 ---
-layout: post
+layout: default
 title:  "Heroku just keeps getting better and better"
-date:   2013-12-12 09:54:06
+date:   2013-12-05 09:54:06
 categories: heroku cloud
+permalink: heroku-better-and-better
 ---
+
+#Heroku just keeps getting better and better
 
 It's been a couple of years since we put our first app on Heroku and I still think it's brilliant.
 
